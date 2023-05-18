@@ -1,0 +1,11 @@
+---
+
+- name: Create systemd config file for project
+  template: src=project.service.j2 dest="/etc/systemd/system/{{ project_name }}.service"
+  notify: Reload project service
+
+- name: Create the project Apache configuration file
+  template:
+    src: site.conf.j2
+    dest: "/confs/{{ web_server_name }}/{{ project_name }}.conf"
+  notify: Reload Apache

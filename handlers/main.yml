@@ -1,0 +1,13 @@
+---
+
+- name: Reload Apache
+  service: name=httpd state=reloaded
+
+- name: Run daemon-reload
+  shell: "systemctl daemon-reload"
+  listen: Reload project service
+
+- name: Reload service
+  service: name={{ project_name }} state=reloaded
+  listen: Reload project service
+
