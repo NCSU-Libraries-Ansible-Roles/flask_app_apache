@@ -38,7 +38,7 @@
   pip:
     requirements: "/opt/python/{{ project_name }}/requirements.txt"
     virtualenv: "/opt/python/{{ project_name }}/venv"
-    virtualenv_command: "python3 -m venv"
+    virtualenv_command: "/usr/local/anaconda/bin/python -m venv"
   become: yes
   become_user: deploy
   tags:
