@@ -14,7 +14,10 @@ It makes the following assumptions:
 ## Role Variables
 
     project_name=<my project name>
+    repo_url=<project repository>
     webserver_name=<fully qualified domain name>
+    vhost_shortname=<vhost short name>
+    
 
 ## Example Playbook
 
