@@ -5,41 +5,18 @@
     path: /opt/python/{{ project_name }}
     state: directory
     owner: deploy
-  tags:
-    - provision
 
 - name: Create systemd config file for project
   template: src=project.service.j2 dest="/etc/systemd/system/{{ project_name }}.service"
   notify: Reload project service
-  tags:
-    - provision
 
 - name: Append proxypass statements to apache config
   blockinfile:
     path: /confs/{{ web_server_name }}/{{ vhost_shortname }}.conf
     block: |
+      <Location "/{{ project_name }}">
+          PassengerEnabled off
+      </Location>
       ProxyPass /{{ project_name }} http://localhost:8000/
       ProxyPassReverse /{{ project_name }} http://localhost:8000/
   notify: Reload Apache
-  tags:
-    - provision
-
-- name: Clone the application
-  git:
-    repo: "{{ repo_url }}"
-    dest: "/opt/python/{{ project_name }}"
-    accept_hostkey: yes
-  become: yes
-  become_user: deploy
-  tags:
-    - deploy
-
-- name: Create virutalenv and install dependencies
-  pip:
-    requirements: "/opt/python/{{ project_name }}/requirements.txt"
-    virtualenv: "/opt/python/{{ project_name }}/venv"
-    virtualenv_command: "/usr/local/anaconda/bin/python -m venv"
-  become: yes
-  become_user: deploy
-  tags:
-    - deploy

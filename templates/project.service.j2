@@ -7,7 +7,7 @@ User=deploy
 Group=apache
 WorkingDirectory=/opt/python/{{ project_name }}
 Environment="PATH=/opt/python/{{ project_name }}/venv/bin"
-ExecStart=/opt/python/{{ project_name }}/venv/bin/gunicorn --workers 3 --bind 127.0.0.1:8000 -m 007 app:app
+ExecStart=/opt/python/{{ project_name }}/venv/bin/gunicorn --workers {{ gunicorn_workers }} --bind 127.0.0.1:8000 -m 007 app:app
 
 [Install]
 WantedBy=multi-user.target
