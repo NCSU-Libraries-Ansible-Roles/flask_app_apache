@@ -20,7 +20,7 @@
     block: |
       ProxyPass /{{ project_name }} http://localhost:8000/
       ProxyPassReverse /{{ project_name }} http://localhost:8000/
-    notify: Reload Apache
+  notify: Reload Apache
   tags:
     - provision
 
